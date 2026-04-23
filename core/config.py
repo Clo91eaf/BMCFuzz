@@ -33,7 +33,7 @@ class Config:
     SBY_PATH: str = os.path.join(BMCFUZZ_HOME, "sby", "sbysrc", "sby.py")
     RIC3_PATH: str = os.environ.get(
         "RIC3_PATH",
-        os.path.join(BMCFUZZ_HOME, "formal", "bin", "rIC3")
+        os.path.join(BMCFUZZ_HOME, "formal", "bin", "ric3-wrapper.sh")
     )
     FORMAL_RUN_DIR: str = os.path.join(BMCFUZZ_HOME, "formal_run")
 

@@ -300,13 +300,15 @@ class FormalExecutor:
             return False
         
         # Build sby command (tools provided by nix, no oss-cad-suite needed)
+        # Use absolute paths to avoid working directory issues
+        sby_file_abs = os.path.abspath(sby_file)
         if self.mode == "sat":
             sby_command = (
-                f"{self.sby_path} --rIC3 {self.rIC3_path} -f {sby_file}"
+                f"{self.sby_path} --rIC3 {self.rIC3_path} -f {sby_file_abs}"
             )
         else:
             sby_command = (
-                f"{self.sby_path} -f {sby_file}"
+                f"{self.sby_path} -f {sby_file_abs}"
             )
         
         try:
