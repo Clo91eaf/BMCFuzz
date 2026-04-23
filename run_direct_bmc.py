@@ -46,10 +46,9 @@ def synth_aig():
 # Elaborate
 prep -top FormalTop
 
-# Keep all cov_count_* as asserts (each becomes a bad output in AIG)
-# Convert non-cover asserts to assumes so they don't interfere
-chformal -assert2assume c:cov_count_* %n
-chformal -remove -assume c:cov_count_*
+# Only keep cov_count_* asserts as bad outputs in AIG.
+# Remove all asserts that are NOT cov_count_*
+chformal -assert -remove c:cov_count_* %n
 
 # Standard formal prep
 hierarchy -smtcheck
