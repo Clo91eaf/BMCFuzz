@@ -367,12 +367,8 @@ class SATParser(ResultParser):
         os.makedirs(output_dir, exist_ok=True)
         witness_output_path = os.path.join(output_dir, f"cover_{cover_point}.witness")
         
-        # Get OSS CAD Suite environment
-        from core.config import Config
-        oss_env = Config.OSS_CAD_SUITE_ENV
-        
         # Use yosys-witness display to convert witness file
-        display_command = f"source {oss_env} && yosys-witness display {witness_file} > {witness_output_path}"
+        display_command = f"yosys-witness display {witness_file} > {witness_output_path}"
         display_command = f"bash -c '{display_command}'"
         
         return_code = run_command(display_command, shell=True)
@@ -555,10 +551,8 @@ class ModuleSATParser(ResultParser):
             witness_dir, f"cover_{cover_point}.witness"
         )
 
-        from core.config import Config
-        oss_env = Config.OSS_CAD_SUITE_ENV
         display_command = (
-            f"bash -c 'source {oss_env} && "
+            f"bash -c '"
             f"yosys-witness display {witness_file} > {witness_output_path}'"
         )
         return_code = run_command(display_command, shell=True)

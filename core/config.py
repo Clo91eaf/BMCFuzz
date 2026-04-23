@@ -31,14 +31,6 @@ class Config:
     POINT_SELECTOR_MAX_POINT_NUM: int = 2
     FORMAL_MAX_WORKERS: int = 2
     SBY_PATH: str = os.path.join(BMCFUZZ_HOME, "sby", "sbysrc", "sby.py")
-    OSS_CAD_SUITE_ENV: str = os.environ.get(
-        "OSS_CAD_SUITE_ENV",
-        os.path.join(
-            os.path.dirname(BMCFUZZ_HOME),
-            "oss-cad-suite",
-            "environment"
-        )
-    )
     RIC3_PATH: str = os.environ.get(
         "RIC3_PATH",
         os.path.join(BMCFUZZ_HOME, "formal", "bin", "rIC3")
@@ -74,7 +66,6 @@ class Config:
         logger.info("=== BMCFuzz Configuration ===")
         logger.info(f"BMCFUZZ_HOME: {cls.BMCFUZZ_HOME}")
         logger.info(f"SBY_PATH: {cls.SBY_PATH}")
-        logger.info(f"OSS_CAD_SUITE_ENV: {cls.OSS_CAD_SUITE_ENV}")
         logger.info(f"RIC3_PATH: {cls.RIC3_PATH}")
         logger.info(f"FORMAL_RUN_DIR: {cls.FORMAL_RUN_DIR}")
         logger.info(f"LOG_DIR: {cls.LOG_DIR}")

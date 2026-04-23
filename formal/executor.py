@@ -32,7 +32,6 @@ class FormalExecutor:
         self.logger = BMCFuzzLogger.get_logger("FormalExecutor")
         self.bmcfuzz_home = Config.BMCFUZZ_HOME
         self.sby_path = Config.SBY_PATH
-        self.oss_cad_suite_env = Config.OSS_CAD_SUITE_ENV
         self.rIC3_path = Config.RIC3_PATH
         self.formal_run_dir = Config.FORMAL_RUN_DIR
         self.max_workers = Config.FORMAL_MAX_WORKERS
@@ -64,17 +63,9 @@ class FormalExecutor:
         
         self.logger.info("FormalExecutor initialized")
         self.logger.debug(f"BMCFUZZ_HOME: {self.bmcfuzz_home}")
-        self.logger.debug(f"OSS_CAD_SUITE_ENV: {self.oss_cad_suite_env}")
         self.logger.debug(f"rIC3 path: {self.rIC3_path}")
         self.logger.debug(f"RTL dir: {self.rtl_dir}")
         self.logger.debug(f"Formal run dir: {self.formal_run_dir}")
-
-        # Try to load oss-cad-suite environment
-        if run_command(f"bash -c 'source {self.oss_cad_suite_env}'", shell=True) != 0:
-            self.logger.error(
-                f"Loading OSS CAD Suite environment failed: {self.oss_cad_suite_env}"
-            )
-            exit(1)
     
     def _load_template(self) -> str:
         """Load sby template file"""
@@ -308,19 +299,15 @@ class FormalExecutor:
             )
             return False
         
-        # Build sby command with oss-cad-suite environment
-        # For SAT mode, add --rIC3 parameter
+        # Build sby command (tools provided by nix, no oss-cad-suite needed)
         if self.mode == "sat":
             sby_command = (
-                f"source {self.oss_cad_suite_env} && "
                 f"{self.sby_path} --rIC3 {self.rIC3_path} -f {sby_file}"
             )
         else:
             sby_command = (
-                f"source {self.oss_cad_suite_env} && "
                 f"{self.sby_path} -f {sby_file}"
             )
-        sby_command = f"bash -c '{sby_command}'"
         
         try:
             start_time = time.time()
